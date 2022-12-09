@@ -6,7 +6,7 @@ data: {
   patronymic: '',
   city: '',
   profession: '',
-  email: inputEmail.value,
+  email: '',
   birthdate:'',
   phone: '',
   expectedSalary: '',
@@ -16,15 +16,15 @@ data: {
   photo: '',
   errors: "",
   file: '',
-  showPreview: false,
-  imagePreview: '',
+  showPreview: false, //флаг наличия картинки
+  imagePreview: '',   //путь к картинке 
 
   institute: '',
   faculty:'',
   specialization:'',
   endYear: '',
-  selectedEduc: '',
-  educ:[
+  selectedEduc: '', // выбранное образование
+  educ:[            
     { level: 'Среднее' },
     { level: 'Среднее специальноее' },
     { level: 'Неоконченное высшее' },
@@ -32,7 +32,7 @@ data: {
   ]
 },
 computed: {
-     fullName: {
+     fullName: {    // Получить полное имя создателя резюме
       get: function () {
           return this.lastName + " " + this.firstName + " " +  this.patronymic;
         },
@@ -40,7 +40,7 @@ computed: {
           return newValue;
         }
      },
-     isCorrectFirstName: {
+     isCorrectFirstName: { // Проверка корректности значения в поле для ввода имени
       get: function(){
         const regex = /^[А-ЯA-Zа-яa-z\s-ё]*$/;
         return regex.test(this.firstName);
@@ -49,7 +49,7 @@ computed: {
         this.profession = newValue;
       } 
      },
-     isCorrectLastName: {
+     isCorrectLastName: { // Проверка корректности значения в поле для ввода фамилии
       get: function(){
         const regex = /^[А-ЯA-Zа-яa-z\s-ё]*$/;
         return regex.test(this.lastName);
@@ -58,7 +58,7 @@ computed: {
         this.profession = newValue;
       } 
      },
-     isCorrecrPatr: {
+     isCorrecrPatr: { // Проверка корректности значения в поле для ввода отчества
       get: function(){
         const regex = /^[А-ЯA-Zа-яa-z\s-ё]*$/;
         return regex.test(this.patronimyc);
@@ -67,7 +67,7 @@ computed: {
         this.profession = newValue;
       } 
      },
-     isCorrectEmail: {
+     isCorrectEmail: { // Проверка корректности значения в поле для ввода почты 
       get: function(){
         if(this.email.length==0) return true;
         const regex = RegExp("^((([0-9A-Za-z]{1}[-0-9A-z\.]{1,}[0-9A-Za-z]{1})|([0-9А-Яа-я]{1}[-0-9А-я\.]{1,}[0-9А-Яа-я]{1}))@([-A-Za-z]{1,}\.){1,2}[-A-Za-z]{2,})$");
@@ -78,7 +78,7 @@ computed: {
         this.profession = newValue;
       } 
      },
-     isCorrectPhone: {
+     isCorrectPhone: { // Проверка корректности значения в поле для ввода телефона
       get: function(){
         if(this.phone.length==0) return true;
         const regex = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\- ]?)?[\d\- ]{7,10}$/;
@@ -88,7 +88,7 @@ computed: {
         this.profession = newValue;
       } 
      },
-     isComplexEduc:{
+     isComplexEduc:{ // Проверка выбранного образования
       get: function(){
         return this.selectedEduc === this.educ[1].level || 
                this.selectedEduc === this.educ[2].level || 
@@ -100,7 +100,7 @@ computed: {
      },
    },
 methods: {
-      handleFileUpload(){
+      handleFileUpload(){ // загрузка файла и отображение фотографии резюме
         this.file = this.$refs.file.files[0];
         let reader  = new FileReader();
         reader.addEventListener("load", function () {
